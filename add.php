@@ -6,37 +6,37 @@
 <BODY>
  <h1> Ajout de sites</h1>
   
-
+<?php
+include "connect.php";
+?>
 
 <?php
 
-$vNom=$_POST["site"];
+$vNom='Meudon';
 
 if(empty($vNom)){
 	echo " Error, empy field.";
 }else {
-	include "connect.php";
-$vConn = fConnect();
-$vSql ="INSERT INTO Site (pk_nom) VALUES ('$vNom')";
-$vQuery=pg_query($vConn, $vSql);
+	$vConn = fConnect();
+	$vSql ="INSERT INTO Site (pk_nom) VALUES ('$vNom')";
+	$vQuery=pg_query($vConn, $vSql);
 
-if($vQuery) 
-	echo "Insertion done";
- else 
-	 echo "Error. Insertion fail";
+	if($vQuery) 
+		echo "Insertion done";
+	 else 
+		 echo "Error. Insertion fail";
+	 pg_close($vConn);
 }
 
 ?> 
 
 <h2>Visualisation des éléments </h2> 
-  <table border="1"> 
-    <tr>
-      <td width="100pt"><b>Lieu</b></td> 
-    </tr> 
-
+<table border="1"> 
+	<tr>
+		<td width="100pt"><b>Lieu</b></td> 
+	</tr> 
 <?php
-//include "connect.php";
-//$vConn = fConnect();
+$vConn = fConnect();
 $vSql ="SELECT * FROM Site ORDER BY pk_nom ";
 $vQuery=pg_query($vConn, $vSql);
 while ($vResult = pg_fetch_array($vQuery)) {
@@ -44,10 +44,11 @@ while ($vResult = pg_fetch_array($vQuery)) {
 	echo "<td>$vResult[pk_nom]</td>";
 	echo"</tr>";
 	}
+pg_close($vConn);
 ?> 
- </table>
-  
-  <a href="formAddSite.php">Retour</a>
+
+</table>
+ <a href="formAddSite.php">Retour</a>
 
 
 </BODY>
