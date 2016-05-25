@@ -12,20 +12,34 @@ include "connect.php";
 
 <?php
 
-$vNom='Meudon';
+$vNom = $_POST["site"];
+$pattern ='/\d/';
+$vOk=1;
 
-if(empty($vNom)){
-	echo " Error, empy field.";
+
+if(preg_match($pattern, $vNom, $matches)){echo"gagné"; $vOk = 0; }
+print_r($matches);
+
+
+
+if($vOk == 0){
+	echo " Erreur, données erronées .";
 }else {
 	$vConn = fConnect();
-	$vSql ="INSERT INTO Site (pk_nom) VALUES ('$vNom')";
-	$vQuery=pg_query($vConn, $vSql);
+	if ($vConn) {
+		$vSql = "INSERT INTO Site (pk_nom) VALUES ('$vNom')";
+		$vQuery = pg_query($vConn, $vSql);
 
-	if($vQuery) 
-		echo "Insertion done";
-	 else 
-		 echo "Error. Insertion fail";
-	 pg_close($vConn);
+		if($vQuery) 
+			echo "Insertion done";
+		 else 
+			 echo "Error. Insertion fail";
+		 
+		 pg_close($vConn);
+		 
+	} else {
+		echo "Une erreur a eu lieu, la connection a échoué.";
+	}
 }
 
 ?> 
