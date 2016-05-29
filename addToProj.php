@@ -9,7 +9,7 @@
 	File name : add.php
 	Aim : Add data in table specified in "connect.php" file. Check that data are complete. 
 	
-	last update : 04/05 par Clement
+	last update : 29/05 par Alexia
 	
 -->
 	</HEAD>
@@ -34,6 +34,26 @@ $pattern ='/[a-zA-Z]+/';
 if(preg_match($pattern, $vProjet, $matches)){
 	
 	$vConn = fConnect(); //connection to database
+
+	if ($vConn) {//if connected
+		$vSql1 = "SELECT pk_num_badge FROM Employe AS E WHERE E.nom='$vEmploye1'";
+		$vQuery1 = pg_query($vConn, $vSql1);
+		
+		//user feedback.
+		if($vQuery1) 
+			echo "Insertion done";
+		 else 
+			 echo "Error. Insertion fail";
+		 
+		 //close connection
+		 pg_close($vConn);
+		 
+	} else { //no connection to database made
+		echo "Une erreur a eu lieu, la connection a échoué.";
+		}
+	}else {
+		echo " $v. Erreur, données erronées.";
+}
 	
 	if ($vConn) {//if connected
 		$vSql1 = "INSERT INTO Participants_Aux_Projets (pfk_employe, pfk_projet ) VALUES ('$vEmploye1','$vProjet')";
