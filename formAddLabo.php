@@ -13,44 +13,26 @@ include "connect.php";
 <!-- begin of page code -->
  <h1> Ajout d'un acteur à un projet</h1>
 
- <!--<h2>  Saisie manuelle  </h2>
+ <h2>  Saisie manuelle  </h2>
  
- <FORM METHOD='POST' ACTION="addToProj.php"> 
- <table>
- <tr>
-	<td> Projet concerné: </td>
-	<td><INPUT NAME="projet"></td>
-</tr>
-<tr>
-	<td> Employé concerné: </td> 
-	<td>Nom :<INPUT NAME="employe1name"></td> <!-- ultimately, we want to allowed people to add several people at the same tame-->
-<!--	<td>Prénom: <INPUT NAME="employe1firstname"></td>
-</tr>
-<tr>
-	<INPUT VALUE="AJOUTER" TYPE="SUBMIT">
-</tr>
-</table>
-
-</FORM>-->
-
-<FORM METHOD='POST' ACTION="addToProj2.php">
+<FORM METHOD='POST' ACTION="addLabo.php">
 
 	<h2>Sélection des éléments </h2> 
 
 <table>
-<tr>
-	<td> Nom du projet </td>
+<tr><!-- Site parameter-->
+	<td> Site </td>
 	<td>
-		<select name="projetkey">
+		<select name="sitenom">
 		<?php
 			$vConn = fConnect();//connection to database
 		 
-			$vSql1 ="SELECT * FROM Projet ORDER BY nom "; // get project
+			$vSql1 ="SELECT * FROM Site ORDER BY pk_nom "; // get site on witch to add labo
 			$vQuery1=pg_query($vConn, $vSql1);
 			
 			while ($vResult1 = pg_fetch_array($vQuery1)){//print project dynamicaly
 		?>
-		<option value="<?php echo $vResult1[pk_key]?>"> <?php echo $vResult1[nom] ?> </option>
+		<option value="<?php echo $vResult1[pk_nom]?>"> <?php echo $vResult1[pk_nom] ?> </option>
 		   <?php
 		   }
 		   pg_close($vConn);
@@ -59,9 +41,9 @@ include "connect.php";
 	</td>
 </tr>
 <tr>
-	<td> Employé à ajouter au projet </td>
+	<td> Directeur </td>
 	<td>
-		<select name="employe1key">
+		<select name="dirkey">
 		<?php
 			$vConn = fConnect();//connection to database
 		 
@@ -77,6 +59,18 @@ include "connect.php";
 		   ?>
 		</select>
 	</td>
+</tr>
+<tr>
+	<td> Nom </td>
+	<td><INPUT type = "text"  name = "nom" ></td>
+</tr>
+<tr>
+	<td> Sigle </td>
+	<td><INPUT type = "text"  name = "sigle" ></td>
+</tr>
+<tr>
+	<td> Logo (URL) </td>
+	<td><INPUT type = "text"  name = "logo" ></td>
 </tr>
 </table>
 
