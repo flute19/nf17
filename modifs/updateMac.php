@@ -16,7 +16,7 @@ $vMac = $_POST["mac"]; // get new mac adress
 $vType = $_POST["type"]; //get new type
 
 
-$pattern = '/^[0-9]{2}(:[0-9]{2}){5}$/';
+$pattern = '/^[0-9A-Z]{2}(:[0-9A-Z]{2}){5}$/';
 
 $vConn = fConnect(); //connection to database
 
